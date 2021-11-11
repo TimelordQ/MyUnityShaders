@@ -52,11 +52,11 @@ Shader "Unlit/MatrixRain"
             v2f vert (appdata v)
             {
                 v2f o;
-                UNITY_SETUP_INSTANCE_ID(o);
                 UNITY_INITIALIZE_OUTPUT(v2f, o);
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.texelSize = fixed2(_MainTex_TexelSize.z, _MainTex_TexelSize.w);
+                UNITY_SETUP_INSTANCE_ID(o);
                 return o;
             }
 

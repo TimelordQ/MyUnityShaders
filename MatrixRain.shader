@@ -33,6 +33,7 @@ Shader "Unlit/MatrixRain"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            half4 _MainTex_TexelSize;
 
             struct appdata
             {
@@ -43,22 +44,19 @@ Shader "Unlit/MatrixRain"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
                 fixed2 texelSize : TEXCOORD2;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
-            uniform fixed4 _MainTex_TexelSize;
-
             v2f vert (appdata v)
             {
                 v2f o;
+                UNITY_SETUP_INSTANCE_ID(o);
+                UNITY_INITIALIZE_OUTPUT(v2f, o);
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.texelSize = fixed2(_MainTex_TexelSize.z, _MainTex_TexelSize.w);
-                UNITY_TRANSFER_FOG(o,o.vertex);
-                UNITY_SETUP_INSTANCE_ID(o);
                 return o;
             }
 
